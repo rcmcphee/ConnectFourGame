@@ -22,7 +22,37 @@ public class Board {
     public static final char PLAYER1 = 'X';
     
     /** constant for the char representing player two's moves */
-    public static final char PLAYER2 = 'O';
+    public static final char PLAYER2 = 'O'; 
+    
+    /** Number of directions to check for victory */
+    public static final int DIRECTIONS = 8;
+    
+    /** Corresponds to checking in the up direction */
+    public static final int UP = 0;
+    
+    /** Corresponds to checking in the up-right direction */
+    public static final int UPRIGHT = 1;
+    
+    /** Corresponds to checking in the right direction */
+    public static final int RIGHT = 2;
+    
+    /** Corresponds to checking in the down-right direction */
+    public static final int DOWNRIGHT = 3;
+    
+    /** Corresponds to checking in the down direction */
+    public static final int DOWN = 4;
+    
+    /** Corresponds to checking in the down-left direction */
+    public static final int DOWNLEFT = 5;
+    
+    /** Corresponds to checking in the left direction */
+    public static final int LEFT = 6;
+    
+    /** Corresponds to checking in the up-left direction */
+    public static final int UPLEFT = 7;
+    
+    /** Pieces in a row needed to win */
+    public static final int WINNUM = 4;
     
     /** private variable for the two dimensional array of the board */
     private char[][] board;
@@ -60,10 +90,10 @@ public class Board {
      * @param numPiecesInEachColumn number of pieces in each column
      * @param desiredColumn the column the player desires to place their piece in
      * @param player which player is making the move
-     * @return the updated version of boardStateInfo
+     * @return the updated version of the board
      * 
      */ 
-    public void updateBoardStateInfo(int desiredColumn, char player, int[] numPiecesInEachColumn) {
+    public void updateBoard(int desiredColumn, char player, int[] numPiecesInEachColumn) {
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
 
         this.board[ROWS - numPiecesInThisColumn][desiredColumn - 1] = player;
@@ -110,7 +140,88 @@ public class Board {
      * @return whether or not the specific piece has 3 of the same type of piece beside it
      * 
      */
-    public static boolean lineCheck(int row, int column) {
-        return false;
+    public boolean lineCheck(int row, int column) {
+        boolean winStatus = false;
+        int checkDirection = 0;
+        while (checkDirection < DIRECTIONS && !winStatus) {
+            try {
+                if (checkDirection == UP) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row + i][column]) {
+                            checkDirection = UPRIGHT;
+                        }
+                    }
+                    if (checkDirection != UPRIGHT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == UPRIGHT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row + i][column + i]) {
+                            checkDirection = RIGHT;
+                        }
+                    }
+                    if (checkDirection != RIGHT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == RIGHT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row][column + i]) {
+                            checkDirection = DOWNRIGHT;
+                        }
+                    }
+                    if (checkDirection != DOWNRIGHT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == DOWNRIGHT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row - i][column + i]) {
+                            checkDirection = DOWN;
+                        }
+                    }
+                    if (checkDirection != DOWN) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == DOWN) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row - i][column]) {
+                            checkDirection = DOWNLEFT;
+                        }
+                    }
+                    if (checkDirection != DOWNLEFT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == DOWNLEFT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row - i][column - i]) {
+                            checkDirection = LEFT;
+                        }
+                    }
+                    if (checkDirection != LEFT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == LEFT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row][column - i]) {
+                            checkDirection = UPLEFT;
+                        }
+                    }
+                    if (checkDirection != UPLEFT) {
+                        winStatus = true;
+                    }
+                } else if (checkDirection == UPLEFT) {
+                    for (int i = 1; i < WINNUM; i++) {
+                        if (this.board[row][column] != this.board[row + i][column - i]) {
+                            checkDirection = DIRECTIONS;
+                        }
+                    }
+                    if (checkDirection != DIRECTIONS) {
+                        winStatus = true;
+                    }
+                }
+            } catch (ArrayIndexOutOfBoundsException e) {
+                checkDirection++;
+            }
+        }
+        return winStatus;
     }
 }
