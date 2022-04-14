@@ -27,6 +27,21 @@ public class Board {
             }
         }
     }
+    
+    /**
+     * Prints the column number header and the entire board with moves
+     */
+    public static void printBoard() {
+        System.out.println(" ( 1 ) ( 2 ) ( 3 ) ( 4 ) ");
+        System.out.println();
+        System.out.println("__________________________");
+        for (int i = 0; i < ROWS; i++) {
+            for (int j = 0; j < COLUMNS; j++) {
+                System.out.print("|_" + board[i][j] + "_");
+            }
+            System.out.println("|");
+        }
+    }        
 }
     
     
