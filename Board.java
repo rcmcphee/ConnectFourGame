@@ -119,16 +119,14 @@ public class Board {
      * @return whether or not the match is over
      * 
      */ 
-    public boolean matchwon() {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
-                if(this.board[i][j] != 0) {
-                    if(lineCheck(i, j)) {
-                        return true;
-                    }
-                }
-            }
+    public boolean matchwon(int[] numPiecesInEachColumn, int desiredColumn) {
+
+        int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
+
+        if (lineCheck(ROWS - numPiecesInThisColumn, desiredColumn - 1)) {
+            return true;
         }
+        
         return false;
     }
 
