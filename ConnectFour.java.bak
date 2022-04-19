@@ -28,13 +28,13 @@ public class ConnectFour {
             gameBoard.printBoard();
             playGame(scnr, moves, gameBoard);
             moves++;
-            if (gameBoard.matchWon() == true) {
+            /*if (//Game is won) {
                 game = false;
             }
             if (moves == 15) {
                 //Tie game method
                 game = false;
-            }
+            }*/
         }  
     }
     

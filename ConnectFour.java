@@ -78,6 +78,6 @@ public class ConnectFour {
             }
         }
         
-        board.updateBoard(n - 1, player, board.getPiecesInColumns());
+        board.updateBoard(n, player, board.getPiecesInColumns());
     }
 }
