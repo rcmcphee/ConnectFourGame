@@ -28,13 +28,13 @@ public class ConnectFour {
             gameBoard.printBoard();
             playGame(scnr, moves, gameBoard);
             moves++;
-            if (gameBoard.mathwon == true) {
+            /*if (//Game is won) {
                 game = false;
             }
             if (moves == 15) {
                 //Tie game method
                 game = false;
-            }
+            }*/
         }  
     }
     
@@ -43,18 +43,18 @@ public class ConnectFour {
      * @param scnr takes the user input
      * @return n number which is the column the user wants to play in
      */
-    public void playGame (Scanner scnr, int moves, Board board) {
+    public static void playGame (Scanner scnr, int moves, Board board) {
         boolean nIsntAProperInteger = true;
-        char player = '';
+        char player = board.PLAYER1;
 
         int n = 0;
         int playerCheck = moves % 2;
         
         if (playerCheck == 0) {
-            System.out.println(Player One's Turn);
+            System.out.println("Player One's Turn");
             player = board.PLAYER1;
         } else if (playerCheck == 1) {
-            System.out.println(Player Two's Turn);
+            System.out.println("Player Two's Turn");
             player = board.PLAYER2;
         }
 
@@ -78,6 +78,6 @@ public class ConnectFour {
             }
         }
         
-        board.updateBoard(n - 1, player, board.piecesInColumn);
+        board.updateBoard(n - 1, player, board.getPiecesInColumns());
     }
 }

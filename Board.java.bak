@@ -19,10 +19,10 @@ public class Board {
     public static final int MAX_MOVES = 16;
     
     /** constant for the char representing player one's moves */
-    public static final char PLAYER1 = 'X';
+    public final char PLAYER1 = 'X';
     
     /** constant for the char representing player two's moves */
-    public static final char PLAYER2 = 'O'; 
+    public final char PLAYER2 = 'O'; 
     
     /** Number of directions to check for victory */
     public static final int DIRECTIONS = 8;
@@ -68,12 +68,16 @@ public class Board {
                 this.board[i][j] = '_';
             }
         }
-        this.piecesInColumn = new int[COLUMNS];
+        this.piecesInColumns = new int[COLUMNS];
         for (int i = 0; i < COLUMNS; i++) {
-            this.piecesInColumn[i] = 0;
+            this.piecesInColumns[i] = 0;
         }
     }
 
+    public int[] getPiecesInColumns() {
+        return piecesInColumns;
+    }
+    
     /**
      * Tells how many pieces are in each column
      * 
@@ -82,7 +86,7 @@ public class Board {
      * @return the updated amount of the number of pieces in each column
      * 
      */ 
-    public static int[] numPiecesInEachColumn (int desiredColumn, int[] numPiecesInEachColumn) {
+    public static int[] UpdatenumPiecesInEachColumn (int desiredColumn, int[] numPiecesInEachColumn) {
 
         int[] updatedNumPiecesInEachColumn = numPiecesInEachColumn;
 
@@ -103,7 +107,7 @@ public class Board {
     public void updateBoard(int desiredColumn, char player, int[] numPiecesInEachColumn) {
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
 
-        this.board[ROWS - numPiecesInThisColumn][desiredColumn - 1] = player;
+        this.board[(numPiecesInThisColumn][desiredColumn - 1] = player;
     }
     
     /**
@@ -111,23 +115,29 @@ public class Board {
      */
     public void printBoard() {
         System.out.println(" ( 1 ) ( 2 ) ( 3 ) ( 4 ) ");
-        System.out.println();
-        System.out.println("__________________________");
+        System.out.println("_________________________");
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
-                System.out.print("|_" + this.board[i][j] + "_");
+                System.out.print("|     ");
+            }
+            System.out.println("|");
+            for (int j = 0; j < COLUMNS; j++) {
+                System.out.print("|  " + this.board[i][j] + "  ");
+            }
+            System.out.println("|");
+            for (int j = 0; j < COLUMNS; j++) {
+                System.out.print("|_____");
             }
             System.out.println("|");
         }
-        System.out.println();
-    }  
+    } 
     
     /**
      * Determines if match is over
      * @return whether or not the match is over
      * 
      */ 
-    public boolean matchwon(int[] numPiecesInEachColumn, int desiredColumn) {
+    public boolean matchWon(int[] numPiecesInEachColumn, int desiredColumn) {
 
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
 

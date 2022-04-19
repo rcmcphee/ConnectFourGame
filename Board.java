@@ -19,10 +19,10 @@ public class Board {
     public static final int MAX_MOVES = 16;
     
     /** constant for the char representing player one's moves */
-    public static final char PLAYER1 = 'X';
+    public final char PLAYER1 = 'X';
     
     /** constant for the char representing player two's moves */
-    public static final char PLAYER2 = 'O'; 
+    public final char PLAYER2 = 'O'; 
     
     /** Number of directions to check for victory */
     public static final int DIRECTIONS = 8;
@@ -74,6 +74,10 @@ public class Board {
         }
     }
 
+    public int[] getPiecesInColumns() {
+        return piecesInColumns;
+    }
+    
     /**
      * Tells how many pieces are in each column
      * 
@@ -103,7 +107,7 @@ public class Board {
     public void updateBoard(int desiredColumn, char player, int[] numPiecesInEachColumn) {
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
 
-        this.board[ROWS - numPiecesInThisColumn][desiredColumn - 1] = player;
+        this.board[numPiecesInThisColumn][desiredColumn - 1] = player;
     }
     
     /**
@@ -133,7 +137,7 @@ public class Board {
      * @return whether or not the match is over
      * 
      */ 
-    public boolean matchwon(int[] numPiecesInEachColumn, int desiredColumn) {
+    public boolean matchWon(int[] numPiecesInEachColumn, int desiredColumn) {
 
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
 
