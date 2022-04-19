@@ -26,15 +26,22 @@ public class ConnectFour {
         Scanner scnr = new Scanner(System.in);
         while (game == true) {
             gameBoard.printBoard();
-            playGame(scnr, moves, gameBoard);
-            moves++;
-            /*if (//Game is won) {
+            if (gameBoard.checkTied() == true) {
+                System.out.println("You tied");
                 game = false;
+            } else if (gameBoard.matchWon(gameBoard.getPiecesInColumns()) == true) {
+                if (moves % 2 == 0) {
+                    System.out.println("Congradulations Player 1, you win");
+                    game = false;
+                } else if (moves % 2 == 1) {
+                    System.out.println("Congradulations Player 2, you win");
+                    game = false;
+                }
+            } else {
+                playGame(scnr, moves, gameBoard);
+                moves++;
             }
-            if (moves == 15) {
-                //Tie game method
-                game = false;
-            }*/
+
         }  
     }
     
@@ -68,6 +75,7 @@ public class ConnectFour {
                     nIsntAProperInteger = false;
                 } else {
                     System.out.println("Enter a number between 1 and 4");
+                    continue;
                 }   
             }
             else {

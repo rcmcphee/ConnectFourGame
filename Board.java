@@ -149,15 +149,27 @@ public class Board {
      * @return whether or not the match is over
      * 
      */ 
-    public boolean matchWon(int[] numPiecesInEachColumn, int desiredColumn) {
+    public boolean matchWon(int[] numPiecesInEachColumn) {
+        for (int i = 0; i < piecesInColumns.length; i++) {
+            
+            int numPiecesInThisColumn = numPiecesInEachColumn[i];
 
-        int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
-
-        if (lineCheck(ROWS - numPiecesInThisColumn, desiredColumn - 1)) {
-            return true;
+            if (lineCheck(ROWS - numPiecesInThisColumn, i - 1)) {
+                return true;
+            }
         }
-        
         return false;
+    }
+    
+    public boolean checkTied() {
+        boolean tied = true;
+        
+        for (int i = 0; i < piecesInColumns.length; i++) {
+            if (piecesInColumns[i] != 4) {
+                tied = false;
+            }
+        }
+        return tied;
     }
 
     /**
