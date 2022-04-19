@@ -21,8 +21,7 @@ public class ConnectFour {
      */
     public static void main (String[] args) {
         
-        Board gameBoard = new Board();
-        gameBoard.printBoard();
+        Board.printBoard();
         
         Scanner scnr = new Scanner(System.in);
         numberInput(scnr);

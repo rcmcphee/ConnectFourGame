@@ -61,7 +61,7 @@ public class Board {
     public Board() {
         this.board = new char[ROWS][COLUMNS];
         for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; i < COLUMNS; j++) {
+            for (int j = 0; j < COLUMNS; j++) {
                 this.board[i][j] = '_';
             }
         }
