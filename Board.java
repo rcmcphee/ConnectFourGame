@@ -1,5 +1,3 @@
-import java.util.*;
-
 /**
  * Connect Four
  * @author Alex Mize
@@ -74,21 +72,23 @@ public class Board {
         }
     }
 
+    /**
+     * Returns an array which details how many pieces are in each column
+     * @return the number of pieces in each column
+     */
     public int[] getPiecesInColumns() {
         return piecesInColumns;
     }
     
     /**
      * Tells how many pieces are in each column
-     * 
-     * @param numPiecesInEachColumn number of pieces in each column
      * @param desiredColumn the player's desired column
      * @return the updated amount of the number of pieces in each column
      * 
      */ 
-    public static int[] updateNumPiecesInEachColumn (int desiredColumn, int[] numPiecesInEachColumn) {
+    public int[] updateNumPiecesInEachColumn (int desiredColumn) {
 
-        int[] updatedNumPiecesInEachColumn = numPiecesInEachColumn;
+        int[] updatedNumPiecesInEachColumn = piecesInColumns;
 
         updatedNumPiecesInEachColumn[desiredColumn] = updatedNumPiecesInEachColumn[desiredColumn] + 1;
 
@@ -104,23 +104,30 @@ public class Board {
      * @return the updated version of the board
      * 
      */ 
-    public void updateBoard(int desiredColumn, char player, int[] numPiecesInEachColumn) {
+    public void updateBoard(int desiredColumn, char player) {
         desiredColumn--;
-        int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
+        int numPiecesInThisColumn = piecesInColumns[desiredColumn];
   
         this.board[(ROWS - 1) - numPiecesInThisColumn][desiredColumn] = player;
-        updateNumPiecesInEachColumn(desiredColumn, numPiecesInEachColumn);
+        updateNumPiecesInEachColumn(desiredColumn);
 
     }
     
-    public boolean checkFull(int column, int[] numPiecesInEachColumn) {
+    /**
+     * Checks if a particular column is full
+     * @param numPiecesInEachColumn number of pieces in each column
+     * @param desiredColumn the column the player desires to place their piece in
+     * @return whether or not the particular column is full
+     */
+    public boolean checkFull(int column) {
         column--;
-        if (numPiecesInEachColumn[column] == 4) {
+        if (piecesInColumns[column] == ROWS) {
             return true;
         } else {
             return false;
         }
     }
+
     /**
      * Prints the column number header and the entire board with moves
      */
@@ -146,21 +153,22 @@ public class Board {
     
     /**
      * Determines if match is over
+     * @param latestColumn The column which has has the most recent
+     * piece put in it
      * @return whether or not the match is over
-     * 
      */ 
-    public boolean matchWon(int[] numPiecesInEachColumn) {
-        for (int i = 0; i < piecesInColumns.length; i++) {
-            
-            int numPiecesInThisColumn = numPiecesInEachColumn[i];
-
-            if (lineCheck(ROWS - numPiecesInThisColumn, i - 1)) {
+    public boolean matchWon(int latestColumn) {
+            int numPiecesInThisColumn = piecesInColumns[latestColumn - 1];
+            if (lineCheck(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
                 return true;
             }
-        }
         return false;
     }
     
+    /**
+     * Determines if match is over (with a tie)
+     * @return whether or not the match is tied
+     */ 
     public boolean checkTied() {
         boolean tied = true;
         

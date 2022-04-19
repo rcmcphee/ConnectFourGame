@@ -24,21 +24,13 @@ public class ConnectFour {
         int moves = 0;
         Board gameBoard = new Board();
         Scanner scnr = new Scanner(System.in);
-        while (game == true) {
+        while (game) {
             gameBoard.printBoard();
             if (gameBoard.checkTied() == true) {
                 System.out.println("You tied");
                 game = false;
-            } else if (gameBoard.matchWon(gameBoard.getPiecesInColumns()) == true) {
-                if (moves % 2 == 0) {
-                    System.out.println("Congradulations Player 1, you win");
-                    game = false;
-                } else if (moves % 2 == 1) {
-                    System.out.println("Congradulations Player 2, you win");
-                    game = false;
-                }
             } else {
-                playGame(scnr, moves, gameBoard);
+                game = playGame(scnr, moves, gameBoard);
                 moves++;
             }
 
@@ -46,11 +38,13 @@ public class ConnectFour {
     }
     
     /**
-     * Gets column number that user wants to play in
+     * Plays a round of connect four and checks if the game is over
      * @param scnr takes the user input
-     * @return n number which is the column the user wants to play in
+     * @param moves how many moves there have been
+     * @param board The object which holds the connect four board's info
+     * @return whether or not the game is over
      */
-    public static void playGame (Scanner scnr, int moves, Board board) {
+    public static boolean playGame (Scanner scnr, int moves, Board board) {
         boolean nIsntAProperInteger = true;
         char player = board.PLAYER1;
 
@@ -82,11 +76,23 @@ public class ConnectFour {
                 System.out.println("Enter a number between 1 and 4");
                 scnr.next();
             }
-            if (board.checkFull(n, board.getPiecesInColumns()) == true) {
+            if (board.checkFull(n) == true) {
                 System.out.println("Column full, please try again");
                 nIsntAProperInteger = true;
             }
         }
-        board.updateBoard(n, player, board.getPiecesInColumns());
+        board.updateBoard(n, player);
+        if (board.matchWon(n) == true) {
+            if (moves % 2 == 0) {
+                board.printBoard();
+                System.out.println("Congratulations Player 1, you win");
+                return false;
+            } else if (moves % 2 == 1) {
+                board.printBoard();
+                System.out.println("Congratulations Player 2, you win");
+                return false;
+            }
+        }
+        return true;
     }
 }
