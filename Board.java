@@ -107,11 +107,20 @@ public class Board {
     public void updateBoard(int desiredColumn, char player, int[] numPiecesInEachColumn) {
         desiredColumn--;
         int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
-        
+  
         this.board[(ROWS - 1) - numPiecesInThisColumn][desiredColumn] = player;
         updateNumPiecesInEachColumn(desiredColumn, numPiecesInEachColumn);
+
     }
     
+    public boolean checkFull(int column, int[] numPiecesInEachColumn) {
+        column--;
+        if (numPiecesInEachColumn[column] == 4) {
+            return true;
+        } else {
+            return false;
+        }
+    }
     /**
      * Prints the column number header and the entire board with moves
      */

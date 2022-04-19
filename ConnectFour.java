@@ -57,27 +57,28 @@ public class ConnectFour {
             System.out.println("Player Two's Turn");
             player = board.PLAYER2;
         }
-
-        while (nIsntAProperInteger) {
+        
+        while (nIsntAProperInteger == true) {
             System.out.print("Enter desired move (Ex: 1 for column 1): ");
             if (scnr.hasNextInt()) {
                 
                 n = scnr.nextInt();
 
-                if (n > LOWER_BOUND && n < UPPER_BOUND) {
+                if (n > LOWER_BOUND && n <= UPPER_BOUND) {
                     nIsntAProperInteger = false;
-                }
-                else {
+                } else {
                     System.out.println("Enter a number between 1 and 4");
-                }
-
+                }   
             }
             else {
                 System.out.println("Enter a number between 1 and 4");
                 scnr.next();
             }
+            if (board.checkFull(n, board.getPiecesInColumns()) == true) {
+                System.out.println("Column full, please try again");
+                nIsntAProperInteger = true;
+            }
         }
-        
         board.updateBoard(n, player, board.getPiecesInColumns());
     }
 }
