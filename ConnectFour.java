@@ -46,17 +46,17 @@ public class ConnectFour {
      */
     public static boolean playGame (Scanner scnr, int moves, Board board) {
         boolean nIsntAProperInteger = true;
-        char player = board.PLAYER1;
+        char player = Board.PLAYER1;
 
         int n = 0;
         int playerCheck = moves % 2;
         
         if (playerCheck == 0) {
             System.out.println("Player One's Turn");
-            player = board.PLAYER1;
+            player = Board.PLAYER1;
         } else if (playerCheck == 1) {
             System.out.println("Player Two's Turn");
-            player = board.PLAYER2;
+            player = Board.PLAYER2;
         }
         
         while (nIsntAProperInteger == true) {

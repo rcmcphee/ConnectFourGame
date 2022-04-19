@@ -17,10 +17,10 @@ public class Board {
     public static final int MAX_MOVES = 16;
     
     /** constant for the char representing player one's moves */
-    public final char PLAYER1 = 'X';
+    public static final char PLAYER1 = 'X';
     
     /** constant for the char representing player two's moves */
-    public final char PLAYER2 = 'O'; 
+    public static final char PLAYER2 = 'O'; 
     
     /** Number of directions to check for victory */
     public static final int DIRECTIONS = 8;
@@ -90,18 +90,16 @@ public class Board {
 
         int[] updatedNumPiecesInEachColumn = piecesInColumns;
 
-        updatedNumPiecesInEachColumn[desiredColumn] = updatedNumPiecesInEachColumn[desiredColumn] + 1;
+        updatedNumPiecesInEachColumn[desiredColumn] 
+            = updatedNumPiecesInEachColumn[desiredColumn] + 1;
 
         return updatedNumPiecesInEachColumn;
     }
 
     /**
      * Updates the board
-     * 
-     * @param numPiecesInEachColumn number of pieces in each column
      * @param desiredColumn the column the player desires to place their piece in
      * @param player which player is making the move
-     * @return the updated version of the board
      * 
      */ 
     public void updateBoard(int desiredColumn, char player) {
@@ -115,8 +113,7 @@ public class Board {
     
     /**
      * Checks if a particular column is full
-     * @param numPiecesInEachColumn number of pieces in each column
-     * @param desiredColumn the column the player desires to place their piece in
+     * @param column the column that is being checked for fullness
      * @return whether or not the particular column is full
      */
     public boolean checkFull(int column) {
@@ -158,10 +155,10 @@ public class Board {
      * @return whether or not the match is over
      */ 
     public boolean matchWon(int latestColumn) {
-            int numPiecesInThisColumn = piecesInColumns[latestColumn - 1];
-            if (lineCheck(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
-                return true;
-            }
+        int numPiecesInThisColumn = piecesInColumns[latestColumn - 1];
+        if (lineCheck(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
+            return true;
+        }
         return false;
     }
     
@@ -173,7 +170,7 @@ public class Board {
         boolean tied = true;
         
         for (int i = 0; i < piecesInColumns.length; i++) {
-            if (piecesInColumns[i] != 4) {
+            if (piecesInColumns[i] != ROWS) {
                 tied = false;
             }
         }
@@ -184,7 +181,6 @@ public class Board {
      * checks if pieces have 3 other pieces in a line with them
      * @param row row at which the check is begun
      * @param column column at which the check is begun
-     * @param boardStateInfo state of the board
      * @return whether or not the specific piece has 3 of the same type of piece beside it
      * 
      */
