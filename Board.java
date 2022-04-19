@@ -68,9 +68,9 @@ public class Board {
                 this.board[i][j] = '_';
             }
         }
-        this.piecesInColumn = new int[COLUMNS];
+        this.piecesInColumns = new int[COLUMNS];
         for (int i = 0; i < COLUMNS; i++) {
-            this.piecesInColumn[i] = 0;
+            this.piecesInColumns[i] = 0;
         }
     }
 
@@ -111,16 +111,22 @@ public class Board {
      */
     public void printBoard() {
         System.out.println(" ( 1 ) ( 2 ) ( 3 ) ( 4 ) ");
-        System.out.println();
-        System.out.println("__________________________");
+        System.out.println("_________________________");
         for (int i = 0; i < ROWS; i++) {
             for (int j = 0; j < COLUMNS; j++) {
-                System.out.print("|_" + this.board[i][j] + "_");
+                System.out.print("|     ");
+            }
+            System.out.println("|");
+            for (int j = 0; j < COLUMNS; j++) {
+                System.out.print("|  " + this.board[i][j] + "  ");
+            }
+            System.out.println("|");
+            for (int j = 0; j < COLUMNS; j++) {
+                System.out.print("|_____");
             }
             System.out.println("|");
         }
-        System.out.println();
-    }  
+    } 
     
     /**
      * Determines if match is over
