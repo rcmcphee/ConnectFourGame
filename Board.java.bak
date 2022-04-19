@@ -57,6 +57,9 @@ public class Board {
     /** private variable for the two dimensional array of the board */
     private char[][] board;
     
+    /** private integer array of the number of pieces in each column */
+    private int[] piecesInColumns;
+    
     /** Board object constructor */
     public Board() {
         this.board = new char[ROWS][COLUMNS];
@@ -64,6 +67,10 @@ public class Board {
             for (int j = 0; j < COLUMNS; j++) {
                 this.board[i][j] = '_';
             }
+        }
+        this.piecesInColumn = new int[COLUMNS];
+        for (int i = 0; i < COLUMNS; i++) {
+            this.piecesInColumn[i] = 0;
         }
     }
 
@@ -112,6 +119,7 @@ public class Board {
             }
             System.out.println("|");
         }
+        System.out.println();
     }  
     
     /**
@@ -119,16 +127,14 @@ public class Board {
      * @return whether or not the match is over
      * 
      */ 
-    public boolean matchwon() {
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
-                if(this.board[i][j] != 0) {
-                    if(lineCheck(i, j)) {
-                        return true;
-                    }
-                }
-            }
+    public boolean matchwon(int[] numPiecesInEachColumn, int desiredColumn) {
+
+        int numPiecesInThisColumn = numPiecesInEachColumn[desiredColumn];
+
+        if (lineCheck(ROWS - numPiecesInThisColumn, desiredColumn - 1)) {
+            return true;
         }
+        
         return false;
     }
 

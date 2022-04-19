@@ -20,11 +20,22 @@ public class ConnectFour {
      * @param args command-line parameters (not used)
      */
     public static void main (String[] args) {
-        
-        Board.printBoard();
-        
+        boolean game = true;
+        int moves = 0;
+        Board gameBoard = new Board();
         Scanner scnr = new Scanner(System.in);
-        numberInput(scnr);
+        while (game == true) {
+            gameBoard.printBoard();
+            playGame(scnr, moves, gameBoard);
+            moves++;
+            if (gameBoard.mathwon == true) {
+                game = false;
+            }
+            if (moves == 15) {
+                //Tie game method
+                game = false;
+            }
+        }  
     }
     
     /**
@@ -32,9 +43,20 @@ public class ConnectFour {
      * @param scnr takes the user input
      * @return n number which is the column the user wants to play in
      */
-    public static int numberInput (Scanner scnr) {
-        boolean nIsntAProperInteger = true; 
+    public void playGame (Scanner scnr, int moves, Board board) {
+        boolean nIsntAProperInteger = true;
+        char player = '';
+
         int n = 0;
+        int playerCheck = moves % 2;
+        
+        if (playerCheck == 0) {
+            System.out.println(Player One's Turn);
+            player = board.PLAYER1;
+        } else if (playerCheck == 1) {
+            System.out.println(Player Two's Turn);
+            player = board.PLAYER2;
+        }
 
         while (nIsntAProperInteger) {
             System.out.print("Enter desired move (Ex: 1 for column 1): ");
@@ -55,6 +77,7 @@ public class ConnectFour {
                 scnr.next();
             }
         }
-        return n;
+        
+        board.updateBoard(n - 1, player, board.numPieces
     }
 }

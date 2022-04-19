@@ -57,6 +57,9 @@ public class Board {
     /** private variable for the two dimensional array of the board */
     private char[][] board;
     
+    /** private integer array of the number of pieces in each column */
+    private int[] piecesInColumns;
+    
     /** Board object constructor */
     public Board() {
         this.board = new char[ROWS][COLUMNS];
@@ -64,6 +67,10 @@ public class Board {
             for (int j = 0; j < COLUMNS; j++) {
                 this.board[i][j] = '_';
             }
+        }
+        this.piecesInColumn = new int[COLUMNS];
+        for (int i = 0; i < COLUMNS; i++) {
+            this.piecesInColumn[i] = 0;
         }
     }
 
@@ -75,7 +82,7 @@ public class Board {
      * @return the updated amount of the number of pieces in each column
      * 
      */ 
-    public static int[] numPiecesInEachColumn (int desiredColumn, int[] numPiecesInEachColumn) {
+    public static int[] UpdatenumPiecesInEachColumn (int desiredColumn, int[] numPiecesInEachColumn) {
 
         int[] updatedNumPiecesInEachColumn = numPiecesInEachColumn;
 
@@ -112,6 +119,7 @@ public class Board {
             }
             System.out.println("|");
         }
+        System.out.println();
     }  
     
     /**
