@@ -222,7 +222,7 @@ public class Board {
                 System.out.println("here4");
                 if (this.board[row][column] == this.board[row][column + 1]
                     && this.board[row][column] == this.board[row][column - 1] ) {
-                        System.out.println("here3");
+                    System.out.println("here3");
                     for (int i = 0; i < WINNUM; i++) {
                         if (column + i < WINNUM) {
                             System.out.println("here2");
@@ -282,7 +282,10 @@ public class Board {
     }
 
     /**
-     * checks if pieces have 3 other pieces in a line with them
+     * checks if pieces have 3 other pieces in a line with them 
+     * this does not account for pieces placed into a line 
+     * which has four in a row, but where the new piece is not
+     * placed at the endpoints of that line
      * @param row row at which the check is begun
      * @param column column at which the check is begun
      * @return whether or not the specific piece has 3 of the same type of piece beside it
