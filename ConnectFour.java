@@ -84,6 +84,8 @@ public class ConnectFour {
                     System.out.println("Number of ties: " + numTies);
                     System.out.println();
                     break;
+                default: 
+                    break;
             }
 
             System.out.println();
@@ -102,24 +104,23 @@ public class ConnectFour {
                 operatorChoiceStr = scnr.next();
             }
 
-        operatorChoice = operatorChoiceStr.charAt(0);
+            operatorChoice = operatorChoiceStr.charAt(0);
         }
     }
 
     /**
      * Initializes and round of connect four
      * @param scnr takes the user input
-     * @param moves how many moves there have been
-     * @param board The object which holds the connect four board's info
-     * @return whether or not the game is over
+     * @return the status of how the game ended
      */
     public static int initializeGame (Scanner scnr) {
-        String promptWinAmt = "Enter many pieces must be connected in a row order to win the game: ";
+        String promptWinAmt = 
+            "Enter many pieces must be connected in a row order to win the game: ";
         String errorMessageBadRangeWinAmt = "Please enter a number greater than three";
         String errorMessageNotANumberWinAmt = "Please enter a number";
 
         int numPiecesToWin = numberInput(scnr, promptWinAmt, errorMessageBadRangeWinAmt, 
-        errorMessageNotANumberWinAmt, LOWER_BOUND_VICTORY, FLAG_NO_UPPER_BOUND, 0);
+            errorMessageNotANumberWinAmt, LOWER_BOUND_VICTORY, FLAG_NO_UPPER_BOUND, 0);
 
         int boardLength = 2 * numPiecesToWin;
 
@@ -145,7 +146,8 @@ public class ConnectFour {
      * @param scnr takes the user input
      * @param moves how many moves there have been
      * @param board The object which holds the connect four board's info
-     * @return whether or not the game is over
+     * @param boardLength length of one side of the board
+     * @return the status of how the game ended
      */
     public static int playRound (Scanner scnr, int moves, Board board, int boardLength) {
         char player = Board.PLAYER1;
@@ -168,7 +170,8 @@ public class ConnectFour {
         int lowerBoundMove = 0;
         int upperBoundMove = boardLength + 1;
         while(badMove) {
-            playerMove = numberInput(scnr, whatToPromptForMove, errorMessageBadRangeMove, errorMessageNotANumber, lowerBoundMove, upperBoundMove, 0);
+            playerMove = numberInput(scnr, whatToPromptForMove, errorMessageBadRangeMove, 
+                errorMessageNotANumber, lowerBoundMove, upperBoundMove, 0);
             if (board.checkFull(playerMove) == true) {
                 System.out.println("Column full, please try again");
             } else {
@@ -205,7 +208,10 @@ public class ConnectFour {
      * @return n the number
      * 
      */ 
-    public static int numberInput(Scanner scnr, String whatToPromptFor, String errorMessageBadRange, String errorMessageNotANumber, int lowerBound, int upperBound, int offset) {
+    public static int numberInput(Scanner scnr, String whatToPromptFor, 
+        String errorMessageBadRange, String errorMessageNotANumber, int lowerBound, 
+        int upperBound, int offset) {
+            
         boolean nIsntAProperInteger = true; 
         int n = 0;
 

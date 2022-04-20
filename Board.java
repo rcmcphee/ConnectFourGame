@@ -58,7 +58,11 @@ public class Board {
     /** private integer array of the number of pieces in each column */
     private int[] piecesInColumns;
     
-    /** Board object constructor */
+    /** Board object constructor 
+     * @param rows number of rows in the board
+     * @param columns number of columns in the board
+     * @param winnum number of pieces in a row needed to win
+    */
     public Board(int rows, int columns, int winnum) {
         this.rows = rows;
         this.columns = columns;
@@ -135,7 +139,8 @@ public class Board {
     public void printBoard() {
         for (int i = 1; i <= this.columns; i++) {
             if (i >= FIRST_DOUBLE_DIGIT) {
-                System.out.print(" (" + String.valueOf(i).charAt(0) + " " + String.valueOf(i).charAt(1) + ")");
+                System.out.print(" (" + String.valueOf(i).charAt(0) 
+                    + " " + String.valueOf(i).charAt(1) + ")");
             } else {
                 System.out.print(" ( " + i + " )");
             }
