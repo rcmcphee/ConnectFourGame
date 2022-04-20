@@ -7,15 +7,6 @@
 
 public class Board {
     
-    /** constant for the number of rows on the board */
-    public static final int ROWS = 4;
-    
-    /** constant for the number of columns on the board */
-    public static final int COLUMNS = 4;
-    
-    /** constant for the maximum possible moves on a 4 x 4 board */
-    public static final int MAX_MOVES = 16;
-    
     /** constant for the char representing player one's moves */
     public static final char PLAYER1 = 'X';
     
@@ -48,9 +39,18 @@ public class Board {
     
     /** Corresponds to checking in the up-left direction */
     public static final int UPLEFT = 7;
+
+    /** The first double digit number*/
+    public static final int FIRST_DOUBLE_DIGIT = 10;
     
     /** Pieces in a row needed to win */
-    public static final int WINNUM = 4;
+    private int winnum;
+
+    /** private variable for the number of rows on the board */
+    private int rows;
+    
+    /** private variable for the number of columns on the board */
+    private int columns;
     
     /** private variable for the two dimensional array of the board */
     private char[][] board;
@@ -59,15 +59,19 @@ public class Board {
     private int[] piecesInColumns;
     
     /** Board object constructor */
-    public Board() {
-        this.board = new char[ROWS][COLUMNS];
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
+    public Board(int rows, int columns, int winnum) {
+        this.rows = rows;
+        this.columns = columns;
+        this.winnum = winnum;
+
+        this.board = new char[this.rows][this.columns];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
                 this.board[i][j] = '_';
             }
         }
-        this.piecesInColumns = new int[COLUMNS];
-        for (int i = 0; i < COLUMNS; i++) {
+        this.piecesInColumns = new int[this.rows];
+        for (int i = 0; i < this.columns; i++) {
             this.piecesInColumns[i] = 0;
         }
     }
@@ -106,7 +110,7 @@ public class Board {
         desiredColumn--;
         int numPiecesInThisColumn = piecesInColumns[desiredColumn];
   
-        this.board[(ROWS - 1) - numPiecesInThisColumn][desiredColumn] = player;
+        this.board[(this.rows - 1) - numPiecesInThisColumn][desiredColumn] = player;
         updateNumPiecesInEachColumn(desiredColumn);
 
     }
@@ -118,7 +122,7 @@ public class Board {
      */
     public boolean checkFull(int column) {
         column--;
-        if (piecesInColumns[column] == ROWS) {
+        if (piecesInColumns[column] == this.rows) {
             return true;
         } else {
             return false;
@@ -129,18 +133,32 @@ public class Board {
      * Prints the column number header and the entire board with moves
      */
     public void printBoard() {
-        System.out.println(" ( 1 ) ( 2 ) ( 3 ) ( 4 ) ");
-        System.out.println("_________________________");
-        for (int i = 0; i < ROWS; i++) {
-            for (int j = 0; j < COLUMNS; j++) {
+        for (int i = 1; i <= this.columns; i++) {
+            if (i >= FIRST_DOUBLE_DIGIT) {
+                System.out.print(" (" + String.valueOf(i).charAt(0) + " " + String.valueOf(i).charAt(1) + ")");
+            } else {
+                System.out.print(" ( " + i + " )");
+            }
+        }
+
+        System.out.println();
+
+        for (int i = 1; i <= this.columns; i++) {
+            System.out.print("______");
+        }
+
+        System.out.println();
+
+        for (int i = 0; i < this.rows; i++) {
+            for (int j = 0; j < this.columns; j++) {
                 System.out.print("|     ");
             }
             System.out.println("|");
-            for (int j = 0; j < COLUMNS; j++) {
+            for (int j = 0; j < this.columns; j++) {
                 System.out.print("|  " + this.board[i][j] + "  ");
             }
             System.out.println("|");
-            for (int j = 0; j < COLUMNS; j++) {
+            for (int j = 0; j < this.columns; j++) {
                 System.out.print("|_____");
             }
             System.out.println("|");
@@ -156,7 +174,7 @@ public class Board {
      */ 
     public boolean matchWon(int latestColumn) {
         int numPiecesInThisColumn = piecesInColumns[latestColumn - 1];
-        if (lineCheck(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
+        if (lineCheck(this.rows - numPiecesInThisColumn, latestColumn - 1)) {
             return true;
         }
         return false;
@@ -170,7 +188,7 @@ public class Board {
         boolean tied = true;
         
         for (int i = 0; i < piecesInColumns.length; i++) {
-            if (piecesInColumns[i] != ROWS) {
+            if (piecesInColumns[i] != this.rows) {
                 tied = false;
             }
         }
@@ -190,7 +208,7 @@ public class Board {
         while (checkDirection < DIRECTIONS && !winStatus) {
             try {
                 if (checkDirection == UP) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row + i][column]) {
                             checkDirection = UPRIGHT;
                         }
@@ -199,7 +217,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == UPRIGHT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row + i][column + i]) {
                             checkDirection = RIGHT;
                         }
@@ -208,7 +226,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == RIGHT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row][column + i]) {
                             checkDirection = DOWNRIGHT;
                         }
@@ -217,7 +235,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == DOWNRIGHT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row - i][column + i]) {
                             checkDirection = DOWN;
                         }
@@ -226,7 +244,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == DOWN) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row - i][column]) {
                             checkDirection = DOWNLEFT;
                         }
@@ -235,7 +253,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == DOWNLEFT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row - i][column - i]) {
                             checkDirection = LEFT;
                         }
@@ -244,7 +262,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == LEFT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row][column - i]) {
                             checkDirection = UPLEFT;
                         }
@@ -253,7 +271,7 @@ public class Board {
                         winStatus = true;
                     }
                 } else if (checkDirection == UPLEFT) {
-                    for (int i = 1; i < WINNUM; i++) {
+                    for (int i = 1; i < winnum; i++) {
                         if (this.board[row][column] != this.board[row + i][column - i]) {
                             checkDirection = DIRECTIONS;
                         }
