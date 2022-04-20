@@ -156,7 +156,7 @@ public class Board {
      */ 
     public boolean matchWon(int latestColumn) {
         int numPiecesInThisColumn = piecesInColumns[latestColumn - 1];
-        if (lineCheck(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
+        if (endPoint(ROWS - numPiecesInThisColumn, latestColumn - 1)) {
             return true;
         }
         return false;
@@ -176,6 +176,110 @@ public class Board {
         }
         return tied;
     }
+    
+    /**
+     * checks if pieces have 3 other pieces in a line with them
+     * Reads the position of a piece and the position of the endpoint of 
+     * a line that a piece makes with pieces of the same kind
+     * into line check
+     * @param row row at which the check is begun
+     * @param column column at which the check is begun
+     * @return whether or not the specific piece has 3 of the same type of piece beside it
+     * 
+     */
+    public boolean endPoint(int row, int column) {
+        int checkDirection = UPRIGHT;
+        int endPointRowUpDiag = -1;
+        int endPointColUpDiag = -1;
+        int endPointRowDownDiag = -1;
+        int endPointColDownDiag = -1;
+        int endPointRowSideways = -1;
+        int endPointColSideways = -1;
+
+        try {
+            if (checkDirection == UPRIGHT) {
+                if (this.board[row][column] == this.board[row - 1][column + 1]
+                    && this.board[row][column] == this.board[row + 1][column - 1] ) {
+                    for (int i = 0; i < WINNUM; i++) {
+                        if (row + i < WINNUM && column - i >= 0) {
+                            if (this.board[row][column] == this.board[row + i][column - i]) {
+                                endPointRowUpDiag = row + i;
+                                endPointColUpDiag = column - i;
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            checkDirection = RIGHT;
+        }
+
+        checkDirection = RIGHT;
+
+        try {
+            System.out.println("here5");
+            if (checkDirection == RIGHT) {
+                System.out.println("here4");
+                if (this.board[row][column] == this.board[row][column + 1]
+                    && this.board[row][column] == this.board[row][column - 1] ) {
+                        System.out.println("here3");
+                    for (int i = 0; i < WINNUM; i++) {
+                        if (column + i < WINNUM) {
+                            System.out.println("here2");
+                            if (this.board[row][column] == this.board[row][column + i]) {
+                                endPointRowSideways = row;
+                                endPointColSideways = column + i;
+                                System.out.println("here1");
+                            }
+                        }
+                    }
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            checkDirection = DOWNRIGHT;
+        }
+
+        checkDirection = DOWNRIGHT;
+
+        try {
+            if (checkDirection == DOWNRIGHT) {
+                if (this.board[row][column] == this.board[row + 1][column + 1]
+                    && this.board[row][column] == this.board[row - 1][column - 1] ) {
+                    for (int i = 0; i < WINNUM; i++) {
+                        if (row + i < WINNUM && column + i < WINNUM) {
+                            if (this.board[row][column] == this.board[row + i][column + i]) {
+                                endPointRowDownDiag = row + i;
+                                endPointColDownDiag = column + i;
+                            }
+                        }
+                    }
+                    checkDirection++;
+                }
+            }
+        } catch (ArrayIndexOutOfBoundsException e) {
+            checkDirection++;
+        } 
+        
+        if (lineCheck(row, column)) {
+            return true;
+        }
+        if (endPointColDownDiag >= 0) {
+            if (lineCheck(endPointRowDownDiag, endPointColDownDiag)) {
+                return true;
+            }
+        }
+        if (endPointColSideways >= 0) {
+            if (lineCheck(endPointRowSideways, endPointColSideways)) {
+                return true;
+            }
+        }
+        if (endPointColUpDiag >= 0) {
+            if (lineCheck(endPointRowUpDiag, endPointColUpDiag)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
     /**
      * checks if pieces have 3 other pieces in a line with them
@@ -186,7 +290,8 @@ public class Board {
      */
     public boolean lineCheck(int row, int column) {
         boolean winStatus = false;
-        int checkDirection = 0;
+        int checkDirection = UP;
+        
         while (checkDirection < DIRECTIONS && !winStatus) {
             try {
                 if (checkDirection == UP) {
