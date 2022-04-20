@@ -217,19 +217,14 @@ public class Board {
         checkDirection = RIGHT;
 
         try {
-            System.out.println("here5");
             if (checkDirection == RIGHT) {
-                System.out.println("here4");
                 if (this.board[row][column] == this.board[row][column + 1]
                     && this.board[row][column] == this.board[row][column - 1] ) {
-                    System.out.println("here3");
                     for (int i = 0; i < WINNUM; i++) {
                         if (column + i < WINNUM) {
-                            System.out.println("here2");
                             if (this.board[row][column] == this.board[row][column + i]) {
                                 endPointRowSideways = row;
                                 endPointColSideways = column + i;
-                                System.out.println("here1");
                             }
                         }
                     }
