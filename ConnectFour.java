@@ -82,7 +82,6 @@ public class ConnectFour {
                     System.out.println("Number of player 1 victories: " + numPlayer1Wins);
                     System.out.println("Number of player 2 victories: " + numPlayer2Wins);
                     System.out.println("Number of ties: " + numTies);
-                    System.out.println();
                     break;
                 default: 
                     break;
