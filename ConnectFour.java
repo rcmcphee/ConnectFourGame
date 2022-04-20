@@ -76,9 +76,11 @@ public class ConnectFour {
                 System.out.println("Enter a number between 1 and 4");
                 scnr.next();
             }
-            if (board.checkFull(n) == true) {
-                System.out.println("Column full, please try again");
-                nIsntAProperInteger = true;
+            if (!nIsntAProperInteger) {
+                if (board.checkFull(n) == true) {
+                    System.out.println("Column full, please try again");
+                    nIsntAProperInteger = true;
+                }
             }
         }
         board.updateBoard(n, player);
