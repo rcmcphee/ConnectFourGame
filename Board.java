@@ -71,14 +71,6 @@ public class Board {
             this.piecesInColumns[i] = 0;
         }
     }
-
-    /**
-     * Returns an array which details how many pieces are in each column
-     * @return the number of pieces in each column
-     */
-    public int[] getPiecesInColumns() {
-        return piecesInColumns;
-    }
     
     /**
      * Tells how many pieces are in each column
